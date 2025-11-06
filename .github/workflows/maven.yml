@@ -11,20 +11,6 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    services:
-      postgres:
-        image: postgres:latest
-        env:
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: flowers
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
     steps:
     - uses: actions/checkout@v4
 
@@ -37,21 +23,6 @@ jobs:
 
     - name: Build with Maven
       run: mvn -B clean compile --file pom.xml
-      env:
-        TZ: UTC
-
-    - name: Wait for PostgreSQL
-      run: |
-        until pg_isready -h localhost -p 5432 -U postgres; do
-          echo "Waiting for PostgreSQL..."
-          sleep 2
-        done
 
     - name: Run tests
       run: mvn -B test
-      env:
-        TZ: UTC
-        MAVEN_OPTS: "-Duser.timezone=UTC"
-        SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/flowers
-        SPRING_DATASOURCE_USERNAME: postgres
-        SPRING_DATASOURCE_PASSWORD: postgres
