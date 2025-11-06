@@ -36,11 +36,15 @@ jobs:
         cache: maven
 
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
+      run: mvn -B clean compile --file pom.xml
+      env:
+        TZ: UTC
 
     - name: Run tests
       run: mvn test
       env:
+        TZ: UTC
+        MAVEN_OPTS: "-Duser.timezone=UTC"
         SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/flowers
         SPRING_DATASOURCE_USERNAME: postgres
         SPRING_DATASOURCE_PASSWORD: postgres
