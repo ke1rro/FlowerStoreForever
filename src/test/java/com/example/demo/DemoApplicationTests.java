@@ -8,9 +8,9 @@ import java.util.TimeZone;
 
 @SpringBootTest
 @TestPropertySource(properties = {
-	"spring.datasource.url=jdbc:postgresql://localhost:5432/flowers",
-	"spring.datasource.username=postgres",
-	"spring.datasource.password=postgres"
+		"spring.datasource.url=jdbc:postgresql://localhost:5432/flowers",
+		"spring.datasource.username=postgres",
+		"spring.datasource.password=postgres"
 })
 class DemoApplicationTests {
 
