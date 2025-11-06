@@ -40,8 +40,15 @@ jobs:
       env:
         TZ: UTC
 
+    - name: Wait for PostgreSQL
+      run: |
+        until pg_isready -h localhost -p 5432 -U postgres; do
+          echo "Waiting for PostgreSQL..."
+          sleep 2
+        done
+
     - name: Run tests
-      run: mvn test
+      run: mvn -B test
       env:
         TZ: UTC
         MAVEN_OPTS: "-Duser.timezone=UTC"
